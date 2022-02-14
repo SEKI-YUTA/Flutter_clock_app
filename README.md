@@ -2,15 +2,17 @@
 
 A new Flutter project.
 
-## Getting Started
+## it's very simple clock app!
 
-This project is a starting point for a Flutter application.
+### features
 
-A few resources to get you started if this is your first Flutter project:
+- display time
+  - change font size
+  - change font color
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### how to change settings?
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![display sample](/assets/images/sample_screen.png)
+
+1. tap bottom left button
+2. change to your taste
