@@ -8,6 +8,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:wakelock/wakelock.dart';
 import 'package:intl/intl.dart';
+import './components/stopwatch.dart';
 
 
 List<String> weekDays = ["月曜","火曜","水曜","木曜","金曜","土曜","日曜",];
@@ -116,6 +117,7 @@ class _MyClockState extends State<MyClock> {
                 ),
                 icon: Icon(Icons.settings)),
             ),
+            if(context.watch<MyClockSettings>()._showStopwatch) Stopwatch()
           ],
         ),
       ),
@@ -127,10 +129,12 @@ class _MyClockState extends State<MyClock> {
 class MyClockSettings with ChangeNotifier, DiagnosticableTreeMixin {
   double _timeFontSize = 40;
   Color _fontColor = Colors.black;
-  bool _timeFormat24 = true;
+  bool _showStopwatch = true;
+  // bool _timeFormat24 = true;
   double get timeFontSize => _timeFontSize;
   Color get fontColor => _fontColor;
-  bool get timeFormat24 => _timeFormat24;
+  bool get showStopwatch => _showStopwatch;
+  // bool get timeFormat24 => _timeFormat24;
 
   void setTimeFontSize(double _newSize) {
     _timeFontSize = _newSize;
@@ -138,7 +142,10 @@ class MyClockSettings with ChangeNotifier, DiagnosticableTreeMixin {
   void setFontColor(Color _newColor) {
     _fontColor = _newColor;
   }
-  void setTimeFormat24(bool is24) {
-    _timeFormat24 = is24;
+  void setShowStopwatch(bool _isShow) {
+    _showStopwatch = _isShow;
   }
+  // void setTimeFormat24(bool is24) {
+  //   _timeFormat24 = is24;
+  // }
 }

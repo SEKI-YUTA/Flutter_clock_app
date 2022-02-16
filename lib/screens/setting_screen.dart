@@ -55,14 +55,27 @@ class _SettingScreenState extends State<SettingScreen> {
                     ),
                   ],
                 ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     Text('24時間表示'),
+                //     Switch(
+                //       value: context.watch<MyClockSettings>().timeFormat24,
+                //       onChanged: (value) {
+                //         context.read<MyClockSettings>().setTimeFormat24(value);
+                //       }
+                //     )
+                //   ],
+                // ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text('24時間表示'),
+                    Text('ストップウィッチを表示'),
                     Switch(
-                      value: context.watch<MyClockSettings>().timeFormat24,
-                      onChanged: (value) {
-                        context.read<MyClockSettings>().setTimeFormat24(value);
+                      value: context.watch<MyClockSettings>().showStopwatch,
+                      onChanged: (value){
+                        print(value);
+                        context.read<MyClockSettings>().setShowStopwatch(value);
                       }
                     )
                   ],
