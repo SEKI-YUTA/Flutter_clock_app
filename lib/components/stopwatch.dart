@@ -2,7 +2,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class Stopwatch extends StatefulWidget {
-  const Stopwatch({ Key? key }) : super(key: key);
+  double currentX, currentY;
+  Stopwatch(
+    { Key? key, required this.currentX, required this.currentY}
+    ) : super(key: key);
 
   @override
   _StopwatchState createState() => _StopwatchState();
@@ -22,8 +25,8 @@ class _StopwatchState extends State<Stopwatch> {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      right: 10,
-      bottom: 10,
+      left: widget.currentX,
+      top: widget.currentY,
       child: Container(
         padding: EdgeInsets.all(10),
         width: 200,
@@ -41,7 +44,12 @@ class _StopwatchState extends State<Stopwatch> {
               children: [
                 ElevatedButton(onPressed: timerButton1, child: Text(active ? '停止' : '開始')),
                 SizedBox(width: 5,),
-                ElevatedButton(onPressed: timerButton2, child: Text('リセット')),
+                ElevatedButton(
+                  onPressed: active? null : timerButton2, child: Text('リセット'),
+                  style: ButtonStyle(
+                    backgroundColor: active ? MaterialStateProperty.all<Color?>(Colors.grey[300]) : MaterialStateProperty.all<Color?>(Colors.blue[600]),
+                  ),
+                ),
               ],
             )
           ],
