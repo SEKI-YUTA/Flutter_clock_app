@@ -1,15 +1,17 @@
 import 'dart:async';
 
-import 'package:clock_app/screens/TestScreen.dart';
 import 'package:clock_app/screens/setting_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wakelock/wakelock.dart';
 import 'package:intl/intl.dart';
 import './components/stopwatch.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+
 
 
 List<String> weekDays = ["月曜","火曜","水曜","木曜","金曜","土曜","日曜",];
@@ -72,9 +74,30 @@ class _MyClockState extends State<MyClock> {
   double _currentX = 10;
   double _currentY = 10;
 
+  @override
   void initState() {
     super.initState();
     Timer.periodic(Duration(seconds: 1), _onTimer);
+    readSettings();
+  }
+
+  void readSettings() async{
+    final prefs = await SharedPreferences.getInstance();
+    String? timeFontSize = await prefs.getString('timeFontSize');
+    String? fontColor = await prefs.getString('fontColor');
+    bool? showStopwatch = await prefs.getBool('showStopwatch');
+    if(timeFontSize != null) {
+      print('timeFontSize is not null');
+      context.read<MyClockSettings>().setTimeFontSize(double.parse(timeFontSize));
+    }
+    if(fontColor != null) {
+      print('FontColor is not null');
+      context.read<MyClockSettings>().setFontColor(colorFromHex('#${fontColor}')!);
+    }
+    if(showStopwatch != null) {
+      print('showStopwatch is not null');
+      context.read<MyClockSettings>().setShowStopwatch(showStopwatch);
+    }
   }
 
   void _onTimer(Timer timer) {

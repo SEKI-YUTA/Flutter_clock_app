@@ -2,6 +2,7 @@ import 'package:clock_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({ Key? key }) : super(key: key);
@@ -11,7 +12,28 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  double _fontSize = 40;
+    double _timeFontSize = 40;
+    //ステートからスライダーに値を渡さないとスライダーのつまみが動かないためステートで渡す
+
+  @override
+  void initState() {
+    super.initState();
+    initTimeFontSize();
+  }
+  void initTimeFontSize() async {
+    Future.delayed(Duration.zero,() {
+      setState(() {
+        _timeFontSize = context.watch<MyClockSettings>().timeFontSize;
+      });
+    });
+  }
+
+  // void initSettings() {
+  //   context.read<MyClockSettings>().setTimeFontSize(_timeFontSize);
+  //   context.read<MyClockSettings>().setFontColor(_fontColor);
+  //   context.read<MyClockSettings>().setShowStopwatch(_showStopwatch);
+  // }
+  
   @override
   Widget build(BuildContext context) {
     return Builder(
@@ -27,11 +49,13 @@ class _SettingScreenState extends State<SettingScreen> {
                   children: [
                     Text('時刻の文字サイズ'),
                     Expanded(
-                      child: Slider(value: _fontSize, onChanged: (value) {
+                      child: Slider(value: _timeFontSize, onChanged: (value) async {
                         print(value);
                         context.read<MyClockSettings>().setTimeFontSize(value);
+                        final prefs = await SharedPreferences.getInstance();
+                        prefs.setString('timeFontSize', value.toString());
                         setState(() {
-                          _fontSize = value;
+                          _timeFontSize = value;
                         });
                       },
                       min: 30,
@@ -48,8 +72,11 @@ class _SettingScreenState extends State<SettingScreen> {
                     FittedBox(
                       child: MaterialPicker(
                         pickerColor: context.watch<MyClockSettings>().fontColor,
-                        onColorChanged: (Color color) {
+                        onColorChanged: (Color color) async {
+                          print(colorToHex(color));
                           context.read<MyClockSettings>().setFontColor(color);
+                          final prefs = await SharedPreferences.getInstance();
+                          prefs.setString('fontColor', colorToHex(color));
                         },
                       )
                     ),
@@ -73,9 +100,11 @@ class _SettingScreenState extends State<SettingScreen> {
                     Text('ストップウィッチを表示'),
                     Switch(
                       value: context.watch<MyClockSettings>().showStopwatch,
-                      onChanged: (value){
+                      onChanged: (value) async {
                         print(value);
                         context.read<MyClockSettings>().setShowStopwatch(value);
+                        final prefs = await SharedPreferences.getInstance();
+                          prefs.setBool('showStopwatch', value);
                       }
                     )
                   ],
