@@ -40,6 +40,8 @@ dependencies:
   flutter_colorpicker: ^1.0.3
   flutter_native_splash: ^2.0.2
   shared_preferences: ^2.0.13
+  battery_plus: ^2.1.2
+  app_settings: ^4.1.1
 
 dev_dependencies:
   flutter_test:

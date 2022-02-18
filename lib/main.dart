@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:clock_app/components/battery_indicator.dart';
 import 'package:clock_app/screens/setting_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +10,9 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wakelock/wakelock.dart';
 import 'package:intl/intl.dart';
-import './components/stopwatch.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter/services.dart';
+import './components/stopwatch.dart';
 
 
 
@@ -21,6 +23,7 @@ void main() {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.landscapeLeft
   ]);
+  SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
   Wakelock.enable();
   // runApp(const MyApp());
   runApp(
@@ -144,6 +147,11 @@ class _MyClockState extends State<MyClock> {
                 builder: (context) => SettingScreen()
                 ),
                 icon: Icon(Icons.settings)),
+            ),
+            Positioned(
+              left: 60,
+              bottom: 10,
+              child: BatteryIndicator()
             ),
             GestureDetector(
               onPanUpdate: (DragUpdateDetails details) {
