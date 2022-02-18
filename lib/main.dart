@@ -185,12 +185,15 @@ class MyClockSettings with ChangeNotifier, DiagnosticableTreeMixin {
 
   void setTimeFontSize(double _newSize) {
     _timeFontSize = _newSize;
+    notifyListeners();
   }
   void setFontColor(Color _newColor) {
     _fontColor = _newColor;
+    notifyListeners();
   }
   void setShowStopwatch(bool _isShow) {
     _showStopwatch = _isShow;
+    notifyListeners();
   }
   // void setTimeFormat24(bool is24) {
   //   _timeFormat24 = is24;

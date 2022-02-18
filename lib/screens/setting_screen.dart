@@ -12,27 +12,12 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-    double _timeFontSize = 40;
     //ステートからスライダーに値を渡さないとスライダーのつまみが動かないためステートで渡す
 
   @override
   void initState() {
     super.initState();
-    initTimeFontSize();
   }
-  void initTimeFontSize() async {
-    Future.delayed(Duration.zero,() {
-      setState(() {
-        _timeFontSize = context.watch<MyClockSettings>().timeFontSize;
-      });
-    });
-  }
-
-  // void initSettings() {
-  //   context.read<MyClockSettings>().setTimeFontSize(_timeFontSize);
-  //   context.read<MyClockSettings>().setFontColor(_fontColor);
-  //   context.read<MyClockSettings>().setShowStopwatch(_showStopwatch);
-  // }
   
   @override
   Widget build(BuildContext context) {
@@ -49,14 +34,11 @@ class _SettingScreenState extends State<SettingScreen> {
                   children: [
                     Text('時刻の文字サイズ'),
                     Expanded(
-                      child: Slider(value: _timeFontSize, onChanged: (value) async {
+                      child: Slider(value: context.watch<MyClockSettings>().timeFontSize, onChanged: (value) async {
                         print(value);
                         context.read<MyClockSettings>().setTimeFontSize(value);
                         final prefs = await SharedPreferences.getInstance();
                         prefs.setString('timeFontSize', value.toString());
-                        setState(() {
-                          _timeFontSize = value;
-                        });
                       },
                       min: 30,
                       max: 180,
@@ -82,18 +64,6 @@ class _SettingScreenState extends State<SettingScreen> {
                     ),
                   ],
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     Text('24時間表示'),
-                //     Switch(
-                //       value: context.watch<MyClockSettings>().timeFormat24,
-                //       onChanged: (value) {
-                //         context.read<MyClockSettings>().setTimeFormat24(value);
-                //       }
-                //     )
-                //   ],
-                // ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
