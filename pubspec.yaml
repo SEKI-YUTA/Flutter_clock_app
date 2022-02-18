@@ -42,6 +42,7 @@ dependencies:
   shared_preferences: ^2.0.13
   battery_plus: ^2.1.2
   app_settings: ^4.1.1
+  image_picker: ^0.8.4+9
 
 dev_dependencies:
   flutter_test:

@@ -2,6 +2,7 @@ import 'package:clock_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -74,8 +75,32 @@ class _SettingScreenState extends State<SettingScreen> {
                         print(value);
                         context.read<MyClockSettings>().setShowStopwatch(value);
                         final prefs = await SharedPreferences.getInstance();
-                          prefs.setBool('showStopwatch', value);
+                        prefs.setBool('showStopwatch', value);
                       }
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text('背景を変更'),
+                    Row(
+                      children: [
+                        TextButton(onPressed: () async {
+                          final ImagePicker _picker = ImagePicker();
+                          final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+                          if(image != null) {
+                            print(image.path);
+                            context.read<MyClockSettings>().setBgImagePath(image.path);
+                            final prefs = await SharedPreferences.getInstance();
+                            prefs.setString('bgImagePath', image.path);
+                          }
+                        }, child: Text('変更')),
+                        TextButton(onPressed: () async {
+                          print('reset');
+                          final prefs = await SharedPreferences.getInstance();
+                          prefs.setString('bgImagePath', "");
+                        }, child: Text('リセット')),
+                      ],
                     )
                   ],
                 )

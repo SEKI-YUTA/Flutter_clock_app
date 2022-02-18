@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:async';
 
 import 'package:clock_app/components/battery_indicator.dart';
@@ -86,9 +87,14 @@ class _MyClockState extends State<MyClock> {
 
   void readSettings() async{
     final prefs = await SharedPreferences.getInstance();
+    String? bgImagePath = await prefs.getString('bgImagePath');
     String? timeFontSize = await prefs.getString('timeFontSize');
     String? fontColor = await prefs.getString('fontColor');
     bool? showStopwatch = await prefs.getBool('showStopwatch');
+    if(bgImagePath != null) {
+      print('bgImagePath is not null');
+      context.read<MyClockSettings>().setBgImagePath(bgImagePath);
+    }
     if(timeFontSize != null) {
       print('timeFontSize is not null');
       context.read<MyClockSettings>().setTimeFontSize(double.parse(timeFontSize));
@@ -125,6 +131,9 @@ class _MyClockState extends State<MyClock> {
       body: Container(
         child: Stack(
           children: [
+            context.watch<MyClockSettings>().bgImagePath != "" ?
+            Positioned(top:0, right:0, bottom: 0, left:0,child: Image.file(File(context.watch<MyClockSettings>().bgImagePath), fit: BoxFit.cover,))
+            : Container(),
             month != null ? Positioned(
               top: 0,
               right: 0,
@@ -174,15 +183,21 @@ class _MyClockState extends State<MyClock> {
 }
 
 class MyClockSettings with ChangeNotifier, DiagnosticableTreeMixin {
+  String _bgImagePath = "";
   double _timeFontSize = 40;
   Color _fontColor = Colors.black;
   bool _showStopwatch = true;
   // bool _timeFormat24 = true;
+  String get bgImagePath => _bgImagePath;
   double get timeFontSize => _timeFontSize;
   Color get fontColor => _fontColor;
   bool get showStopwatch => _showStopwatch;
   // bool get timeFormat24 => _timeFormat24;
 
+  void setBgImagePath(String _newPath) {
+    _bgImagePath = _newPath;
+    notifyListeners();
+  }
   void setTimeFontSize(double _newSize) {
     _timeFontSize = _newSize;
     notifyListeners();
