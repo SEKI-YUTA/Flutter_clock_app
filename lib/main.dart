@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // home: MyClock(),
-      home: MyClock(),
+      home: const MyClock(),
     );
   }
 }
@@ -81,7 +81,7 @@ class _MyClockState extends State<MyClock> {
   @override
   void initState() {
     super.initState();
-    Timer.periodic(Duration(seconds: 1), _onTimer);
+    Timer.periodic(const Duration(seconds: 1), _onTimer);
     readSettings();
   }
 
@@ -146,7 +146,7 @@ class _MyClockState extends State<MyClock> {
                   Text(time, style: TextStyle(fontSize: double.parse(context.watch<MyClockSettings>()._timeFontSize.toString()), fontWeight: FontWeight.bold, color: context.watch<MyClockSettings>().fontColor),),
                 ],
               ),
-            ) : Text('しばらくお待ち下さい'),
+            ) : const Text('しばらくお待ち下さい'),
             Positioned(
               left: 10,
               bottom: 10,
@@ -155,9 +155,9 @@ class _MyClockState extends State<MyClock> {
                 context: context,
                 builder: (context) => SettingScreen()
                 ),
-                icon: Icon(Icons.settings)),
+                icon: const Icon(Icons.settings)),
             ),
-            Positioned(
+            const Positioned(
               left: 60,
               bottom: 10,
               child: BatteryIndicator()

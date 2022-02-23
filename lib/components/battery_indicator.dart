@@ -25,7 +25,7 @@ class _BatteryIndicatorState extends State<BatteryIndicator> {
     setState(() {
       _batteryLevel = batteryLevel;
     });
-    Timer.periodic(Duration(seconds: 30), (timer) async {
+    Timer.periodic(const Duration(seconds: 30), (timer) async {
       int batteryLevel = await battery.batteryLevel;
       setState(() {
         _batteryLevel = batteryLevel;

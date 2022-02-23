@@ -33,7 +33,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('時刻の文字サイズ'),
+                    const Text('時刻の文字サイズ'),
                     Expanded(
                       child: Slider(value: context.watch<MyClockSettings>().timeFontSize, onChanged: (value) async {
                         print(value);
@@ -51,7 +51,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('時刻の文字カラー'),
+                    const Text('時刻の文字カラー'),
                     FittedBox(
                       child: MaterialPicker(
                         pickerColor: context.watch<MyClockSettings>().fontColor,
@@ -68,7 +68,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text('ストップウィッチを表示'),
+                    const Text('ストップウィッチを表示'),
                     Switch(
                       value: context.watch<MyClockSettings>().showStopwatch,
                       onChanged: (value) async {
@@ -82,7 +82,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 ),
                 Row(
                   children: [
-                    Text('背景を変更'),
+                    const Text('背景を変更'),
                     Row(
                       children: [
                         TextButton(onPressed: () async {
@@ -94,12 +94,12 @@ class _SettingScreenState extends State<SettingScreen> {
                             final prefs = await SharedPreferences.getInstance();
                             prefs.setString('bgImagePath', image.path);
                           }
-                        }, child: Text('変更')),
+                        }, child:const Text('変更')),
                         TextButton(onPressed: () async {
                           print('reset');
                           final prefs = await SharedPreferences.getInstance();
                           prefs.setString('bgImagePath', "");
-                        }, child: Text('リセット')),
+                        }, child: const Text('リセット')),
                       ],
                     )
                   ],
